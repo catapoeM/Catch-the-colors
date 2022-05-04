@@ -1,5 +1,6 @@
 function startGame() {
   createHoles()
+  let points = 0;
 
   function createHoles() {
     const parentCanvas = document.getElementById('parentCanvas')
@@ -17,13 +18,19 @@ function startGame() {
         canvas.style.left = left + 'cm'
         canvas.style.top = top + 'cm'
         canvas.setAttribute('id', id)
-        canvas.addEventListener('click', function() {
-          alert(this.getAttribute('id'))
-        })
+        
+        
         left += 12
         parentCanvas.appendChild(canvas)
       }
       top += 6
+    }
+  }
+
+  function catchTheMole() {
+    points += 10;
+    if (points >= 50) {
+      alert(points)
     }
   }
 
@@ -34,6 +41,8 @@ function startGame() {
     let random = mathRandom()
     const parentCanvas = document.getElementById('parentCanvas')
     parentCanvas.childNodes[random].style.backgroundColor = 'yellow'
+    parentCanvas.childNodes[random].addEventListener("click", catchTheMole, true);
+    
     const intervalRemove =  setInterval(function () {
       removeMole(random, intervalRemove)
       }, 1000)
@@ -43,11 +52,14 @@ function startGame() {
     clearInterval(intervalRemove)
     const parentCanvas = document.getElementById('parentCanvas')
     parentCanvas.childNodes[random].style.backgroundColor = 'white'
+    parentCanvas.childNodes[random].removeEventListener("click", catchTheMole, true);
     const intervalAdding = setInterval(function () {
       addingMole(intervalAdding)
       }, 1000)
       
   }
+
+  
 
   function mathRandom() {
     let random = Math.floor(Math.random() * 9) + 0;
