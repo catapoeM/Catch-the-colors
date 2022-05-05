@@ -2,7 +2,7 @@ function startGame() {
   createHoles()
   let points = 0;
   let speedMole = 1000, speedMole_2 = 1000, speedMole_3 = 1000;
-  let once = 1, random, random_2, random_3;
+  let once = 1, random, random_2, random_3, unclick = -1;
 
   function createHoles() {
     const parentCanvas = document.getElementById('parentCanvas')
@@ -20,8 +20,6 @@ function startGame() {
         canvas.style.left = left + 'cm'
         canvas.style.top = top + 'cm'
         canvas.setAttribute('id', id)
-        
-        
         left += 12
         parentCanvas.appendChild(canvas)
       }
@@ -30,24 +28,31 @@ function startGame() {
   }
 
   function catchTheMole() {
-    points += 10;
-    if (points == 30) {
-      alert(points)
-      speedMole = speedMole - 50;
-    }else if (points == 50) {
-      alert(points)
-      speedMole_2 = speedMole_2 - 50;
-      speedMole = speedMole - 50;
+    if (unclick != this.id) {
+      points += 10;
+      if (points == 30) {
+        speedMole = speedMole - 50;
+      }else if (points == 50) {
+        //alert(points)
+        speedMole_2 = speedMole_2 - 50;
+        speedMole = speedMole - 50;
+      }
     }
+    unclick = this.id
   }
 
-  addingMole()
+  function info() {
+    let textInfo = document.getElementById('textInfo')
+    textInfo.innerHTML = 'Points: ' + points
+  }
 
-  function addingMole(intervalAdding) {
+  addMole()
+  function addMole(intervalAdding) {
     clearInterval(intervalAdding)
     random = mathRandom();
     if (random == random_2 || random_3 == random) {
-      random = mathRandom()
+      random = mathRandom();
+      unclick = random;
     }
     const parentCanvas = document.getElementById('parentCanvas')
     parentCanvas.childNodes[random].style.backgroundColor = 'yellow'
@@ -56,26 +61,29 @@ function startGame() {
       removeMole(random, intervalRemove)
     }, speedMole)
     if (points == 30 && once == 1) {
-      addingMole_2()
+      addMole_2()
       once = 2;
     }
   }
 
   function removeMole(random, intervalRemove) {
+    unclick = -1
+    info()
     clearInterval(intervalRemove)
     const parentCanvas = document.getElementById('parentCanvas')
     parentCanvas.childNodes[random].style.backgroundColor = 'white'
     parentCanvas.childNodes[random].removeEventListener("click", catchTheMole, true);
     const intervalAdding = setInterval(function () {
-      addingMole(intervalAdding)
+      addMole(intervalAdding)
     }, speedMole)
   }
 
-  function addingMole_2(intervalAdding) {
+  function addMole_2(intervalAdding) {
     clearInterval(intervalAdding)
     random_2 = mathRandom();
     if (random_2 == random || random_2 == random_3) {
       random_2 = mathRandom()
+      unclick = random_2;
     }
     const parentCanvas = document.getElementById('parentCanvas')
     parentCanvas.childNodes[random_2].style.backgroundColor = 'yellow'
@@ -84,26 +92,29 @@ function startGame() {
       removeMole_2(random_2, intervalRemove)
     }, speedMole_2)
     if (points == 70 && once == 2) {
-      addingMole_3()
+      addMole_3()
       once = 0;
     }
   }
 
   function removeMole_2(random_2, intervalRemove) {
+    unclick = -1
+    info()
     clearInterval(intervalRemove)
     const parentCanvas = document.getElementById('parentCanvas')
     parentCanvas.childNodes[random_2].style.backgroundColor = 'white'
     parentCanvas.childNodes[random_2].removeEventListener("click", catchTheMole, true);
     const intervalAdding = setInterval(function () {
-      addingMole_2(intervalAdding)
+      addMole_2(intervalAdding)
     }, speedMole_2)
   }
 
-  function addingMole_3(intervalAdding) {
+  function addMole_3(intervalAdding) {
     clearInterval(intervalAdding)
     random_3 = mathRandom();
     if (random_3 == random || random_3 == random_2) {
       random_3 = mathRandom()
+      unclick = random_3;
     }
     const parentCanvas = document.getElementById('parentCanvas')
     parentCanvas.childNodes[random_3].style.backgroundColor = 'yellow'
@@ -114,12 +125,14 @@ function startGame() {
   }
 
   function removeMole_3(random_3, intervalRemove) {
+    unclick = -1
+    info()
     clearInterval(intervalRemove)
     const parentCanvas = document.getElementById('parentCanvas')
     parentCanvas.childNodes[random_3].style.backgroundColor = 'white'
     parentCanvas.childNodes[random_3].removeEventListener("click", catchTheMole, true);
     const intervalAdding = setInterval(function () {
-      addingMole_3(intervalAdding)
+      addMole_3(intervalAdding)
     }, speedMole_3)
   }
 
@@ -127,14 +140,4 @@ function startGame() {
     let random = Math.floor(Math.random() * 9) + 0;
     return random;
   }
-  
-  
-
-  
-
-  
-  
-  
-
-  
 }
