@@ -1,8 +1,13 @@
 function startGame() {
+  const startButton = document.getElementById('startButton').disabled = true;
   createHoles()
   let points = 0;
-  let speedMole = 1000, speedMole_2 = 1000, speedMole_3 = 1000;
-  let once = 1, random, random_2, random_3, unclick = -1;
+  let speedMole = 1500, speedMole_2 = 1500, speedMole_3 = 1500, speedMole_4 = 1500;
+  let next = 1, random, random_2, random_3, random_4, unclick = -1;
+  const arrayOfNumbers = [];
+  for (let i = 0; i <= 9; ++i) {
+    arrayOfNumbers[i] = 0;
+  }
 
   function createHoles() {
     const parentCanvas = document.getElementById('parentCanvas')
@@ -31,14 +36,20 @@ function startGame() {
     if (unclick != this.id) {
       points += 10;
       if (points == 30) {
-        speedMole = speedMole - 50;
+        //speedMole = speedMole - 50;
       }else if (points == 50) {
-        //alert(points)
-        speedMole_2 = speedMole_2 - 50;
-        speedMole = speedMole - 50;
+        //speedMole_2 = speedMole_2 - 50;
+        //speedMole = speedMole - 50;
       }
     }
     unclick = this.id
+  }
+
+  function catchTheRedMole() {
+    if (unclick != this.id) {
+      points -= 50;
+    }
+    unclick = this.id;
   }
 
   function info() {
@@ -49,10 +60,14 @@ function startGame() {
   addMole()
   function addMole(intervalAdding) {
     clearInterval(intervalAdding)
-    random = mathRandom();
-    if (random == random_2 || random_3 == random) {
+    // check if the hole already has a color
+    for (let i = 0; i <= 9; ++i) {
       random = mathRandom();
-      unclick = random;
+      if (arrayOfNumbers[random] == 0) {
+        arrayOfNumbers[random] = 1;
+        i = 10;
+        unclick = random;
+      } 
     }
     const parentCanvas = document.getElementById('parentCanvas')
     parentCanvas.childNodes[random].style.backgroundColor = 'yellow'
@@ -60,13 +75,15 @@ function startGame() {
     const intervalRemove = setInterval(function () {
       removeMole(random, intervalRemove)
     }, speedMole)
-    if (points == 30 && once == 1) {
+    if (points >= 30 && next == 1) {
       addMole_2()
-      once = 2;
+      next = 2;
     }
   }
 
   function removeMole(random, intervalRemove) {
+    // delete the memory of color
+    arrayOfNumbers[random] = 0;
     unclick = -1
     info()
     clearInterval(intervalRemove)
@@ -80,24 +97,30 @@ function startGame() {
 
   function addMole_2(intervalAdding) {
     clearInterval(intervalAdding)
-    random_2 = mathRandom();
-    if (random_2 == random || random_2 == random_3) {
-      random_2 = mathRandom()
-      unclick = random_2;
+    // check if the hole already has a color
+    for (let i = 0; i <= 9; ++i) {
+      random_2 = mathRandom();
+      if (arrayOfNumbers[random_2] == 0) {
+        arrayOfNumbers[random_2] = 1;
+        i = 10;
+        unclick = random_2;
+      } 
     }
     const parentCanvas = document.getElementById('parentCanvas')
-    parentCanvas.childNodes[random_2].style.backgroundColor = 'yellow'
+    parentCanvas.childNodes[random_2].style.backgroundColor = 'green'
     parentCanvas.childNodes[random_2].addEventListener("click", catchTheMole, true);
     const intervalRemove = setInterval(function () {
       removeMole_2(random_2, intervalRemove)
     }, speedMole_2)
-    if (points == 70 && once == 2) {
+    if (points >= 70 && next == 2) {
       addMole_3()
-      once = 0;
+      next = 3;
     }
   }
 
   function removeMole_2(random_2, intervalRemove) {
+    // delete the memory of color
+    arrayOfNumbers[random_2] = 0;
     unclick = -1
     info()
     clearInterval(intervalRemove)
@@ -111,20 +134,30 @@ function startGame() {
 
   function addMole_3(intervalAdding) {
     clearInterval(intervalAdding)
-    random_3 = mathRandom();
-    if (random_3 == random || random_3 == random_2) {
-      random_3 = mathRandom()
-      unclick = random_3;
+    // check if the hole already has a color
+    for (let i = 0; i <= 9; ++i) {
+      random_3 = mathRandom();
+      if (arrayOfNumbers[random_3] == 0) {
+        arrayOfNumbers[random_3] = 1;
+        i = 10;
+        unclick = random_3;
+      } 
     }
     const parentCanvas = document.getElementById('parentCanvas')
-    parentCanvas.childNodes[random_3].style.backgroundColor = 'yellow'
+    parentCanvas.childNodes[random_3].style.backgroundColor = 'blue'
     parentCanvas.childNodes[random_3].addEventListener("click", catchTheMole, true);
     const intervalRemove = setInterval(function () {
       removeMole_3(random_3, intervalRemove)
     }, speedMole_3)
+    if (points >= 100 && next == 3) {
+      addRedMole()
+      next = 4;
+    }
   }
 
   function removeMole_3(random_3, intervalRemove) {
+    // delete the memory of color
+    arrayOfNumbers[random_3] = 0;
     unclick = -1
     info()
     clearInterval(intervalRemove)
@@ -134,6 +167,39 @@ function startGame() {
     const intervalAdding = setInterval(function () {
       addMole_3(intervalAdding)
     }, speedMole_3)
+  }
+
+  function addRedMole(intervalAdding) {
+    clearInterval(intervalAdding)
+    // check if the hole already has a color
+    for (let i = 0; i <= 9; ++i) {
+      random_4 = mathRandom();
+      if (arrayOfNumbers[random_4] == 0) {
+        arrayOfNumbers[random_4] = 1;
+        i = 10;
+        unclick = random_4;
+      } 
+    }
+    const parentCanvas = document.getElementById('parentCanvas')
+    parentCanvas.childNodes[random_4].style.backgroundColor = 'red'
+    parentCanvas.childNodes[random_4].addEventListener("click", catchTheRedMole, true);
+    const intervalRemove = setInterval(function () {
+      removeRedMole(random_4, intervalRemove)
+    }, speedMole_4)
+  }
+
+  function removeRedMole(random_4, intervalRemove) {
+    // delete the memory of color
+    arrayOfNumbers[random_4] = 0;
+    unclick = -1
+    info()
+    clearInterval(intervalRemove)
+    const parentCanvas = document.getElementById('parentCanvas')
+    parentCanvas.childNodes[random_4].style.backgroundColor = 'white'
+    parentCanvas.childNodes[random_4].removeEventListener("click", catchTheRedMole, true);
+    const intervalAdding = setInterval(function () {
+      addRedMole(intervalAdding)
+    }, speedMole_4)
   }
 
   function mathRandom() {
