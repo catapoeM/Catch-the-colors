@@ -3,7 +3,6 @@ function startGame() {
   createHoles()
   let points = 0;
   let speedMole = 1500;
-  let random, clickedId = -1, clicksAmount = 0;
 
   function createHoles() {
     const parentCanvas = document.getElementById('parentCanvas')
@@ -34,12 +33,13 @@ function startGame() {
   }
 
   function catchTheMole(id) {
-    alert(id)
-    if (id != clickedId && clicksAmount < 1) {
+    const parentCanvas = document.getElementById('parentCanvas')
+    let elementId = parentCanvas.childNodes[id].getAttribute('clickable')
+    if (elementId == 1) {
       points += 10;
-      ++clicksAmount
+      parentCanvas.childNodes[id].removeAttribute('clickable')
     }
-    clickedId = id
+    info()
   }
 
   function info() {
@@ -50,20 +50,22 @@ function startGame() {
   addMole()
   function addMole() {
     // check if the hole already has a color
+    let random;
     for (let i = 0; i < 9; ++i) {
-      random = mathRandom();
+      random = mathRandom.call()
       if (arrayOfNumbers[random] == 0) {
         arrayOfNumbers[random] = 1;
         i = 11;
       } 
     }
-    alert(random + ' add')
+    //alert(random + ' add')
     const parentCanvas = document.getElementById('parentCanvas')
     parentCanvas.childNodes[random].style.backgroundColor = 'yellow'
     parentCanvas.childNodes[random].addEventListener("click", function() {
       let id = this.id;
       catchTheMole(id)
-    });
+    }, true);
+    parentCanvas.childNodes[random].setAttribute('clickable', 1)
     const intervalRemove = setInterval(function () {
       removeMole(random)
       clearInterval(intervalRemove)
@@ -71,15 +73,15 @@ function startGame() {
   }
 
   function removeMole(random) {
-    alert(random + ' remove')
     // delete the memory of color
     arrayOfNumbers[random] = 0;
-    info()
-    clicksAmount = 0;
-    clickedId = -1;
     const parentCanvas = document.getElementById('parentCanvas')
     parentCanvas.childNodes[random].style.backgroundColor = 'white'
-    parentCanvas.childNodes[random].removeEventListener("click", catchTheMole, true);
+    parentCanvas.childNodes[random].removeEventListener("click", function() {
+      let id = this.id;
+      catchTheMole(id)
+    }, true);
+    parentCanvas.childNodes[random].removeAttribute('clickable')
     const intervalAdding = setInterval(function () {
       addMole();
       clearInterval(intervalAdding)
