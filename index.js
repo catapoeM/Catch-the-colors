@@ -68,10 +68,8 @@ function startGame() {
         i = 9;
       } 
     }
-    //alert(random + ' add')
-    const parentCanvas = document.getElementById('parentCanvas')
-    parentCanvas.childNodes[random].style.backgroundColor = 'yellow'
-    parentCanvas.childNodes[random].setAttribute('clickable', 1)
+    const color = 1;
+    addStyleAndAttribute(random, color)
     const intervalRemove = setInterval(function () {
       removeMole(random)
       clearInterval(intervalRemove)
@@ -86,12 +84,23 @@ function startGame() {
     }
   }
 
-  function removeMole(random) {
-    // delete the memory of color
-    arrayOfNumbers[random] = 0;
+  function addStyleAndAttribute(random, color) {
+    colors = ['', 'yellow', 'green', 'blue', 'red']
+    const parentCanvas = document.getElementById('parentCanvas')
+    parentCanvas.childNodes[random].style.backgroundColor = colors[color]
+    parentCanvas.childNodes[random].setAttribute('clickable', color)
+  }
+
+  function removeStyleAndAttribute(random) {
     const parentCanvas = document.getElementById('parentCanvas')
     parentCanvas.childNodes[random].style.backgroundColor = 'white'
     parentCanvas.childNodes[random].removeAttribute('clickable')
+  }
+
+  function removeMole(random) {
+    // delete the memory of color
+    arrayOfNumbers[random] = 0;
+    removeStyleAndAttribute(random)
     const intervalAdding = setInterval(function () {
       addMole();
       clearInterval(intervalAdding)
@@ -108,10 +117,8 @@ function startGame() {
         i = 9;
       } 
     }
-    //alert(random + ' add')
-    const parentCanvas = document.getElementById('parentCanvas')
-    parentCanvas.childNodes[random].style.backgroundColor = 'green'
-    parentCanvas.childNodes[random].setAttribute('clickable', 2)
+    const color = 2;
+    addStyleAndAttribute(random, color)
     const intervalRemove = setInterval(function () {
       removeMole2(random)
       clearInterval(intervalRemove)
@@ -128,9 +135,7 @@ function startGame() {
   function removeMole2(random) {
     // delete the memory of color
     arrayOfNumbers[random] = 0;
-    const parentCanvas = document.getElementById('parentCanvas')
-    parentCanvas.childNodes[random].style.backgroundColor = 'white'
-    parentCanvas.childNodes[random].removeAttribute('clickable')
+    removeStyleAndAttribute(random)
     const intervalAdding = setInterval(function () {
       addMole2();
       clearInterval(intervalAdding)
@@ -147,10 +152,8 @@ function startGame() {
         i = 9;
       } 
     }
-    //alert(random + ' add')
-    const parentCanvas = document.getElementById('parentCanvas')
-    parentCanvas.childNodes[random].style.backgroundColor = 'blue'
-    parentCanvas.childNodes[random].setAttribute('clickable', 3)
+    const color = 3;
+    addStyleAndAttribute(random, color)
     const intervalRemove = setInterval(function () {
       removeMole3(random)
       clearInterval(intervalRemove)
@@ -167,9 +170,7 @@ function startGame() {
   function removeMole3(random) {
     // delete the memory of color
     arrayOfNumbers[random] = 0;
-    const parentCanvas = document.getElementById('parentCanvas')
-    parentCanvas.childNodes[random].style.backgroundColor = 'white'
-    parentCanvas.childNodes[random].removeAttribute('clickable')
+    removeStyleAndAttribute(random)
     const intervalAdding = setInterval(function () {
       addMole3();
       clearInterval(intervalAdding)
@@ -186,10 +187,8 @@ function startGame() {
         i = 9;
       } 
     }
-    //alert(random + ' add')
-    const parentCanvas = document.getElementById('parentCanvas')
-    parentCanvas.childNodes[random].style.backgroundColor = 'red'
-    parentCanvas.childNodes[random].setAttribute('clickable', 4)
+    const color = 4;
+    addStyleAndAttribute(random, color)
     const intervalRemove = setInterval(function () {
       removeMole4(random)
       clearInterval(intervalRemove)
@@ -199,9 +198,7 @@ function startGame() {
   function removeMole4(random) {
     // delete the memory of color
     arrayOfNumbers[random] = 0;
-    const parentCanvas = document.getElementById('parentCanvas')
-    parentCanvas.childNodes[random].style.backgroundColor = 'white'
-    parentCanvas.childNodes[random].removeAttribute('clickable')
+    removeStyleAndAttribute(random)
     const intervalAdding = setInterval(function () {
       addMole4();
       clearInterval(intervalAdding)
