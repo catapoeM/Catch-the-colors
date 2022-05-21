@@ -1,5 +1,5 @@
 function startGame() {
-  const startButton = document.getElementById('startButton').disabled = true;
+  document.getElementById('startButton').disabled = true;
   createRightAngle()
   let points = 0, seconds = 60;
   let speedYellow = 1500, speedGreen = 1450, speedBlue = 1400, speedRed = 1250, youCanAdd = 2;
@@ -34,18 +34,23 @@ function startGame() {
   const startTime = setInterval(timeLeft, 1000);
   function timeLeft() {
     --seconds;
+    
     let time = document.getElementById('time')
     time.innerHTML = 'Time: ' + seconds
     if (seconds <= 0) {
       clearInterval(startTime)
+      gameFinished()
     }
   }
 
   const arrayOfNumbers = [];
-  for (let i = 0; i < 9; ++i) {
-    arrayOfNumbers[i] = 0;
+  initialiazeArray()
+  function initialiazeArray() {
+    for (let i = 0; i < 9; ++i) {
+      arrayOfNumbers[i] = 0;
+    }
   }
-
+  
   function catchTheColor(id) {
     const parentCanvas = document.getElementById('parentCanvas')
     let elementId = parentCanvas.childNodes[id].getAttribute('clickable')
@@ -219,4 +224,41 @@ function startGame() {
     let random = Math.floor(Math.random() * 10);
     return random;
   }
+
+  function gameFinished() {
+    const resetButtonParent = document.getElementById('resetButtonParent')
+    const resetGameButton = document.createElement('button')
+    resetGameButton.innerText = 'Reset game'
+    resetGameButton.style.position = 'absolute'
+    resetGameButton.style.left = 50 + '%'
+    resetGameButton.style.bottom = 1 + 'cm'
+    resetGameButton.addEventListener('click', function() {
+      resetGame()
+    })
+    clearTheRectAngles()
+    resetButtonParent.appendChild(resetGameButton)
+  }
+
+  function clearTheRectAngles() {
+    alert('clearTheRectAngles')
+    // The colors are not removing !!!!!!!!!!!!!!! Error
+    const parentCanvas = document.getElementById('parentCanvas')
+    for (let i = 0; i < parentCanvas.children.length; ++i) {
+      parentCanvas.childNodes[i].style.backgroundColor = 'white'
+      parentCanvas.childNodes[i].removeAttribute('clickable')
+    }
+  }
+
+  function resetGame() {
+    const parentCanvas = document.getElementById('parentCanvas')
+    const resetButtonParent = document.getElementById('resetButtonParent')
+    while (parentCanvas.firstChild) {
+      parentCanvas.removeChild(parentCanvas.firstChild);
+    }
+     points = 0, seconds = 60;
+     speedYellow = 1500, speedGreen = 1450, speedBlue = 1400, speedRed = 1250, youCanAdd = 2;
+    resetButtonParent.removeChild(resetButtonParent.lastChild)
+    document.getElementById('startButton').disabled = false;
+  }
+
 }
