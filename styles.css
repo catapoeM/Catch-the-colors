@@ -41,3 +41,9 @@
   color: red;
   background-color: rgba(0, 0, 0, 0.173);
 }
+
+#gameInfoText {
+  position: absolute;
+  right: 25%;
+  top: 30%;
+}

@@ -1,9 +1,18 @@
 function startGame() {
   document.getElementById('startButton').disabled = true;
-  createRightAngle()
+
+  removeTextInfo()
+  function removeTextInfo() {
+    const gameInfo = document.querySelectorAll('.gameInfo')
+    for (let i = 0; i < gameInfo.length; ++i) {
+      gameInfo[i].innerText = '';
+    }
+  }
+ 
   let points = 0, seconds = 60;
   let speedYellow = 1500, speedGreen = 1450, speedBlue = 1400, speedRed = 1250, youCanAdd = 2;
 
+  createRightAngle()
   function createRightAngle() {
     const parentCanvas = document.getElementById('parentCanvas')
     let canvas;
@@ -100,10 +109,12 @@ function startGame() {
   }
 
   function addStyleAndAttribute(random, color) {
-    colors = ['', 'yellow', 'green', 'blue', 'red']
-    const parentCanvas = document.getElementById('parentCanvas')
-    parentCanvas.childNodes[random].style.backgroundColor = colors[color]
-    parentCanvas.childNodes[random].setAttribute('clickable', color)
+    if (youCanAdd != 0) {
+      colors = ['', 'yellow', 'green', 'blue', 'red']
+      const parentCanvas = document.getElementById('parentCanvas')
+      parentCanvas.childNodes[random].style.backgroundColor = colors[color]
+      parentCanvas.childNodes[random].setAttribute('clickable', color)
+    }
   }
 
   function removeStyleAndAttribute(random) {
@@ -240,8 +251,7 @@ function startGame() {
   }
 
   function clearTheRectAngles() {
-    alert('clearTheRectAngles')
-    // The colors are not removing !!!!!!!!!!!!!!! Error
+    youCanAdd = 0;
     const parentCanvas = document.getElementById('parentCanvas')
     for (let i = 0; i < parentCanvas.children.length; ++i) {
       parentCanvas.childNodes[i].style.backgroundColor = 'white'
