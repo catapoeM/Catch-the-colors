@@ -1,7 +1,7 @@
 # Catch the colors
 
-1) The player has a start button and a table with 6 figures
-
-2) The yellow color is randomly displayed and you can earn points if you click on it
-
-3) If you earn more points then more colors appear on table
+1) The player has a start button and a table with 9 Rectangles
+2) Each color is randomly displayed
+3) The more points you earn the more colors appear on table
+4) Each color has its own property
+5) The player has only 60 seconds to make the best score

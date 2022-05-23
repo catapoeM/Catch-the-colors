@@ -278,5 +278,4 @@ function startGame() {
     resetButtonParent.removeChild(resetButtonParent.lastChild)
     document.getElementById('startButton').disabled = false;
   }
-
 }
