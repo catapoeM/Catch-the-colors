@@ -1,6 +1,5 @@
 function startGame() {
   document.getElementById('startButton').disabled = true;
-
   removeTextInfo()
   function removeTextInfo() {
     const gameInfo = document.querySelectorAll('.gameInfo')
@@ -77,8 +76,8 @@ function startGame() {
   }
   info()
   function info() {
-    let textInfo = document.getElementById('textInfo')
-    textInfo.innerHTML = 'Points: ' + points
+    let pointsInfo = document.getElementById('pointsInfo')
+    pointsInfo.innerHTML = 'Points: ' + points
   }
 
   addYellow()
@@ -108,29 +107,16 @@ function startGame() {
     }
   }
 
-  function addStyleAndAttribute(random, color) {
-    if (youCanAdd != 0) {
-      colors = ['', 'yellow', 'green', 'blue', 'red']
-      const parentCanvas = document.getElementById('parentCanvas')
-      parentCanvas.childNodes[random].style.backgroundColor = colors[color]
-      parentCanvas.childNodes[random].setAttribute('clickable', color)
-    }
-  }
-
-  function removeStyleAndAttribute(random) {
-    const parentCanvas = document.getElementById('parentCanvas')
-    parentCanvas.childNodes[random].style.backgroundColor = 'white'
-    parentCanvas.childNodes[random].removeAttribute('clickable')
-  }
-
   function removeYellow(random) {
     // delete the memory of color
     arrayOfNumbers[random] = 0;
     removeStyleAndAttribute(random)
-    const intervalAdding = setInterval(function () {
-      addYellow();
-      clearInterval(intervalAdding)
-    }, speedYellow)
+    if (youCanAdd != 0) {
+      const intervalAdding = setInterval(function () {
+        addYellow();
+        clearInterval(intervalAdding)
+      }, speedYellow)
+    }
   }
 
   function addGreen() {
@@ -162,10 +148,12 @@ function startGame() {
     // delete the memory of color
     arrayOfNumbers[random] = 0;
     removeStyleAndAttribute(random)
-    const intervalAdding = setInterval(function () {
-      addGreen();
-      clearInterval(intervalAdding)
-    }, speedGreen)
+    if (youCanAdd != 0) {
+      const intervalAdding = setInterval(function () {
+        addGreen();
+        clearInterval(intervalAdding)
+      }, speedGreen)
+    }
   }
 
   function addBlue() {
@@ -197,10 +185,12 @@ function startGame() {
     // delete the memory of color
     arrayOfNumbers[random] = 0;
     removeStyleAndAttribute(random)
-    const intervalAdding = setInterval(function () {
-      addBlue();
-      clearInterval(intervalAdding)
-    }, speedBlue)
+    if (youCanAdd != 0) {
+      const intervalAdding = setInterval(function () {
+        addBlue();
+        clearInterval(intervalAdding)
+      }, speedBlue)
+    }
   }
 
   function addRed() {
@@ -225,10 +215,28 @@ function startGame() {
     // delete the memory of color
     arrayOfNumbers[random] = 0;
     removeStyleAndAttribute(random)
-    const intervalAdding = setInterval(function () {
-      addRed();
-      clearInterval(intervalAdding)
-    }, speedRed)
+    if (youCanAdd != 0) {
+      const intervalAdding = setInterval(function () {
+        addRed();
+        clearInterval(intervalAdding)
+      }, speedRed)
+    }
+  }
+
+  function addStyleAndAttribute(random, color) {
+    // Here is the problem "you can add!"
+    if (youCanAdd != 0) {
+      colors = ['', 'yellow', 'green', 'blue', 'red']
+      const parentCanvas = document.getElementById('parentCanvas')
+      parentCanvas.childNodes[random].style.backgroundColor = colors[color]
+      parentCanvas.childNodes[random].setAttribute('clickable', color)
+    }
+  }
+
+  function removeStyleAndAttribute(random) {
+    const parentCanvas = document.getElementById('parentCanvas')
+    parentCanvas.childNodes[random].style.backgroundColor = 'white'
+    parentCanvas.childNodes[random].removeAttribute('clickable')
   }
  
   function mathRandom() {
