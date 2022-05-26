@@ -11,8 +11,8 @@ function startGame() {
   let points = 0, seconds = 60;
   let speedYellow = 1500, speedGreen = 1450, speedBlue = 1400, speedRed = 1250, youCanAdd = 2;
 
-  createRightAngle()
-  function createRightAngle() {
+  createRectAngle()
+  function createRectAngle() {
     const parentCanvas = document.getElementById('parentCanvas')
     let canvas;
     let width = 6, height = 3, left = 10, top = 6;
